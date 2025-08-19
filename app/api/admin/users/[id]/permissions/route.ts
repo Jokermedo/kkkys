@@ -2,14 +2,14 @@ import { NextResponse } from "next/server"
 import { createAuthContext } from "@/lib/security/enhanced-auth"
 import { sql } from "@/lib/database/connection"
 
-export async function GET(req: Request, context: any) {
+export async function GET(req: Request, { params }: any) {
   try {
     const authContext = await createAuthContext(req)
     if (!authContext || !authContext.canAccess({ resource: "users", action: "read" })) {
       return NextResponse.json({ error: "غير مصرح" }, { status: 403 })
     }
 
-    const userId = context.params.id
+    const userId = params.id
 
     const result = await sql`
       SELECT permissions 
@@ -26,14 +26,14 @@ export async function GET(req: Request, context: any) {
   }
 }
 
-export async function PUT(req: Request, context: any) {
+export async function PUT(req: Request, { params }: any) {
   try {
     const authContext = await createAuthContext(req)
     if (!authContext || !authContext.canAccess({ resource: "users", action: "update" })) {
       return NextResponse.json({ error: "غير مصرح" }, { status: 403 })
     }
 
-    const userId = context.params.id
+    const userId = params.id
     const { permissions } = await req.json()
 
     if (!Array.isArray(permissions)) {
