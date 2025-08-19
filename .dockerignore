@@ -1,0 +1,16 @@
+# Ignore node modules and build artifacts
+node_modules
+.next
+.next/cache
+out
+.git
+.gitignore
+Dockerfile*
+.dockerignore
+.env
+.env.*
+.vercel
+.vscode
+pnpm-debug.log*
+npm-debug.log*
+yarn-error.log*
