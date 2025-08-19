@@ -1,18 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import { createAuthContext } from "@/lib/security/enhanced-auth"
 import { sql } from "@/lib/database/connection"
 
-export async function GET(
-  req: NextRequest,
-  ctx: { params: Promise<{ id: string }> },
-) {
+export async function GET(req: Request, ctx: { params: { id: string } }) {
   try {
     const authContext = await createAuthContext(req)
     if (!authContext || !authContext.canAccess({ resource: "users", action: "read" })) {
       return NextResponse.json({ error: "غير مصرح" }, { status: 403 })
     }
 
-    const { id: userId } = await ctx.params
+    const { id: userId } = ctx.params
     const { searchParams } = new URL(req.url)
     const limit = Number.parseInt(searchParams.get("limit") || "50")
     const offset = Number.parseInt(searchParams.get("offset") || "0")
