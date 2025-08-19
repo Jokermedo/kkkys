@@ -56,7 +56,7 @@ export function ContentEditor({ blockId, blockType }: ContentEditorProps) {
   const handleSave = useCallback(async () => {
     setSaving(true)
     try {
-      const response = await fetch("/api/admin/content", {
+      const response = await fetch("/api/cms/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -83,7 +83,7 @@ export function ContentEditor({ blockId, blockType }: ContentEditorProps) {
   const handlePublish = useCallback(async () => {
     setPublishing(true)
     try {
-      const response = await fetch("/api/admin/content", {
+      const response = await fetch("/api/cms/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

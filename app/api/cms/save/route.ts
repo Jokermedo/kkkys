@@ -1,17 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { headers } from "next/headers"
+import { NextResponse } from "next/server"
 
-export async function POST(request: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const headersList = headers()
-    const authorization = headersList.get("authorization")
+    const authorization = req.headers.get("authorization")
 
     // Simple auth check - in production, use proper JWT validation
     if (!authorization || !authorization.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const data = await request.json()
+    const data = await req.json()
 
     // In a real app, save to database
     // For now, we'll just return success
